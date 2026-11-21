@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Angel Thank-You Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;450;500;600;700&display=swap">
+<style>
+  :root {
+    --bg:#ffffff; --bg-tint:#faf8fc; --ink:#1c1722; --ink-2:#534c5e; --ink-3:#8a8396;
+    --hair:#ece8f0; --hair-2:#f3eff6; --purple:#7a2e8c; --purple-2:#6a2279;
+    --purple-wash:#f6eef8; --gold:#c79330; --ok:#2f8a5b;
+    --font-display:"Fraunces",Georgia,serif; --font:"Inter",system-ui,-apple-system,sans-serif;
+    --r:14px; --maxw:1160px;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#141017; --bg-tint:#1a151f; --ink:#f4eff8; --ink-2:#c4bccf; --ink-3:#8f8799;
+    --hair:#2a2430; --hair-2:#221d28; --purple:#cf9bdd; --purple-2:#ddb2e8;
+    --purple-wash:#241a2a; --gold:#e3bd6b; --ok:#6cc898; color-scheme:dark; } }
+  :root[data-theme="dark"]{
+    --bg:#141017; --bg-tint:#1a151f; --ink:#f4eff8; --ink-2:#c4bccf; --ink-3:#8f8799;
+    --hair:#2a2430; --hair-2:#221d28; --purple:#cf9bdd; --purple-2:#ddb2e8;
+    --purple-wash:#241a2a; --gold:#e3bd6b; --ok:#6cc898; color-scheme:dark; }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;
+    font-size:15.5px;-webkit-font-smoothing:antialiased;letter-spacing:-0.006em;position:relative;}
+
+  .bg-art{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+    background:
+      radial-gradient(1100px 620px at 82% -8%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 60%),
+      radial-gradient(900px 600px at 10% 108%, color-mix(in srgb, var(--purple) 13%, transparent), transparent 62%);}
+  .bg-art svg{position:absolute;right:-40px;bottom:-30px;width:min(460px,42vw);height:auto;opacity:.11;}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .bg-art svg{opacity:.16;} }
+  :root[data-theme="dark"] .bg-art svg{opacity:.16;}
+  @media (max-width:680px){ .bg-art svg{width:300px;opacity:.08;} }
+
+  .shell{max-width:var(--maxw);margin:0 auto;
+    padding-left:max(28px,env(safe-area-inset-left,0px));
+    padding-right:max(28px,env(safe-area-inset-right,0px));}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding-block:20px;border-bottom:1px solid var(--hair);}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .logo{width:30px;height:30px;border-radius:8px;background:radial-gradient(circle at 50% 30%, var(--gold), var(--purple) 80%);display:grid;place-items:center;}
+  .logo svg{width:17px;height:17px;}
+  .brand-name{font-weight:600;font-size:15px;letter-spacing:-0.01em;}
+  .brand-name span{color:var(--ink-3);font-weight:450;}
+  .topbar-right{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:7px;}
+  .ai-dot{width:7px;height:7px;border-radius:50%;background:var(--ok);}
+
+  .hero{padding-block:clamp(44px,8vw,80px) clamp(28px,5vw,48px);max-width:760px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--purple);background:var(--purple-wash);padding:5px 12px;border-radius:999px;margin-bottom:22px;}
+  .eyebrow b{width:6px;height:6px;border-radius:50%;background:var(--purple);}
+  h1{font-family:var(--font-display);font-weight:500;font-size:clamp(2.4rem,6vw,3.9rem);line-height:1.02;letter-spacing:-0.025em;margin:0 0 20px;text-wrap:balance;}
+  .hero p{font-size:clamp(1.05rem,2.2vw,1.28rem);color:var(--ink-2);margin:0;max-width:56ch;line-height:1.5;}
+
+  .bench{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:clamp(28px,5vw,64px);padding-block:8px 72px;align-items:start;}
+  @media (max-width:860px){ .bench{grid-template-columns:1fr;gap:40px;} }
+  .col-label{font-size:12px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px;}
+
+  .field{margin-bottom:22px;}
+  label.lbl{display:block;font-size:13.5px;font-weight:500;margin-bottom:8px;color:var(--ink);}
+  .lbl .opt{color:var(--ink-3);font-weight:400;}
+  input[type=text],textarea,select{width:100%;font-family:inherit;font-size:15px;color:var(--ink);
+    background:var(--bg-tint);border:1px solid var(--hair);border-radius:10px;padding:11px 13px;
+    transition:border-color .15s, box-shadow .15s, background .15s;}
+  input::placeholder,textarea::placeholder{color:var(--ink-3);}
+  textarea{resize:vertical;min-height:60px;line-height:1.5;}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--purple);background:var(--bg);
+    box-shadow:0 0 0 3.5px color-mix(in srgb, var(--purple) 15%, transparent);}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:460px){ .two{grid-template-columns:1fr;} }
+
+  .seg{display:inline-flex;background:var(--bg-tint);border:1px solid var(--hair);border-radius:10px;padding:3px;gap:2px;width:100%;}
+  .seg label{flex:1;text-align:center;font-size:13.5px;font-weight:500;padding:8px 6px;border-radius:7px;cursor:pointer;color:var(--ink-2);transition:background .16s,color .16s;}
+  .seg input{position:absolute;opacity:0;width:0;height:0;}
+  .seg label:has(input:checked){background:var(--bg);color:var(--purple);box-shadow:0 1px 2px rgba(0,0,0,.06);font-weight:600;}
+  .seg label:has(input:focus-visible){box-shadow:0 0 0 3px color-mix(in srgb, var(--purple) 30%, transparent);}
+
+  .toggle-money,.toggle-items{display:none;}
+  body[data-gift="money"] .toggle-money,
+  body[data-gift="items"] .toggle-items,
+  body[data-gift="both"] .toggle-money,
+  body[data-gift="both"] .toggle-items{display:block;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-family:inherit;font-size:13px;font-weight:500;padding:7px 13px;border-radius:8px;border:1px solid var(--hair);background:var(--bg);color:var(--ink-2);cursor:pointer;transition:all .14s;}
+  .chip[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#fff;}
+  .chip:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb, var(--purple) 28%, transparent);}
+
+  .output{position:sticky;top:24px;}
+  @media (max-width:860px){ .output{position:static;} }
+  .channel{display:inline-flex;gap:2px;background:var(--bg-tint);border:1px solid var(--hair);border-radius:10px;padding:3px;margin-bottom:18px;flex-wrap:wrap;}
+  .channel button{font-family:inherit;font-size:13.5px;font-weight:500;padding:7px 15px;border-radius:7px;border:none;background:transparent;color:var(--ink-2);cursor:pointer;transition:all .16s;}
+  .channel button[aria-selected="true"]{background:var(--bg);color:var(--purple);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.06);}
+  .channel button:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb, var(--purple) 28%, transparent);}
+
+  .note-shell{border:1px solid var(--hair);border-radius:var(--r);overflow:hidden;background:var(--bg);}
+  .note-top{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--hair-2);background:var(--bg-tint);gap:10px;}
+  .note-top .subject{font-size:13px;color:var(--ink-2);font-weight:500;}
+  .note-top .meta{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .note{display:block;width:100%;border:none;background:transparent;resize:vertical;
+    font-family:var(--font-display);font-weight:400;font-size:16px;line-height:1.78;
+    padding:26px;min-height:300px;color:var(--ink);}
+  .note:focus{outline:none;}
+  body[data-channel="text"] .note{font-family:var(--font);font-size:15px;line-height:1.6;}
+
+  /* loading + empty states */
+  .note-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:300px;padding:30px;text-align:center;color:var(--ink-3);}
+  .spinner{width:30px;height:30px;border-radius:50%;border:3px solid var(--hair);border-top-color:var(--purple);animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .note-state p{margin:0;font-size:14px;max-width:34ch;}
+  .hidden{display:none !important;}
+
+  .bar{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;}
+  button.btn{font-family:inherit;font-size:14px;font-weight:550;cursor:pointer;border-radius:10px;padding:11px 18px;border:1px solid transparent;transition:transform .08s,background .15s,border-color .15s,color .15s,opacity .15s;}
+  button.btn:active{transform:translateY(1px);}
+  button.btn:disabled{opacity:.5;cursor:not-allowed;}
+  .btn-primary{background:var(--purple);color:#fff;}
+  .btn-primary:hover:not(:disabled){background:var(--purple-2);}
+  .btn-soft{background:var(--bg-tint);border-color:var(--hair);color:var(--ink);}
+  .btn-soft:hover:not(:disabled){border-color:var(--purple);color:var(--purple);}
+  button.btn:focus-visible{outline:none;box-shadow:0 0 0 3.5px color-mix(in srgb, var(--purple) 32%, transparent);}
+
+  .sendhint{margin-top:12px;font-size:12.5px;color:var(--ink-3);}
+  .sendhint b{color:var(--ink-2);font-weight:600;}
+
+  .history{border-top:1px solid var(--hair);margin-top:64px;padding-top:40px;padding-bottom:70px;}
+  .history-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .history-head h2{font-family:var(--font-display);font-weight:500;font-size:1.5rem;margin:0;letter-spacing:-0.02em;}
+  .history-head .sub{font-size:13px;color:var(--ink-3);}
+  .link-btn{font-family:inherit;font-size:13px;font-weight:500;background:none;border:none;color:var(--ink-3);cursor:pointer;padding:4px 6px;border-radius:6px;}
+  .link-btn:hover{color:var(--purple);}
+  .hist-list{display:grid;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r);overflow:hidden;}
+  .hist-empty{padding:36px 24px;text-align:center;color:var(--ink-3);font-size:14px;background:var(--bg);}
+  .hist-row{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg);transition:background .14s;}
+  .hist-row:hover{background:var(--bg-tint);}
+  .hist-av{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:600;font-size:14px;color:#fff;background:var(--purple);}
+  .hist-main{min-width:0;flex:1;}
+  .hist-name{font-weight:600;font-size:14.5px;}
+  .hist-sub{font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .hist-actions{display:flex;gap:6px;flex:none;}
+  .mini{font-family:inherit;font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:7px;border:1px solid var(--hair);background:var(--bg);color:var(--ink-2);cursor:pointer;transition:all .14s;}
+  .mini:hover{border-color:var(--purple);color:var(--purple);}
+  .mini.danger:hover{border-color:#d14b4b;color:#d14b4b;}
+
+  .toast{position:fixed;left:50%;transform:translateX(-50%) translateY(14px);bottom:calc(26px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:550;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:40;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  footer{border-top:1px solid var(--hair);padding-block:28px 44px;font-size:12.5px;color:var(--ink-3);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  footer em{color:var(--ink-2);font-style:italic;}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;} .spinner{animation-duration:1.4s;} }
+</style>
+</head>
+<body data-gift="items" data-channel="email">
+
+<div class="bg-art" aria-hidden="true">
+  <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--purple)"/><stop offset="1" stop-color="var(--gold)"/></linearGradient></defs>
+    <path d="M200 150c-14-26-40-40-66-33-30 8-40 40-26 72 8 18 24 34 44 48 18-12 34-28 44-44" stroke="url(#g1)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M200 150c14-26 40-40 66-33 30 8 40 40 26 72-8 18-24 34-44 48-18-12-34-28-44-44" stroke="url(#g1)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M110 250c-22 6-40 24-44 50-3 22 6 44 26 58M290 250c22 6 40 24 44 50 3 22-6 44-26 58" stroke="url(#g1)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M150 330c16 16 34 24 50 24s34-8 50-24" stroke="url(#g1)" stroke-width="9" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.3-9-8.5C1.5 9.8 2.8 6.5 6 6c2 .3 3.2 1.6 4 3 .8-1.4 2-2.7 4-3 3.2-.5 4.5 2.8 3 6.5C18.5 16.7 12 21 12 21z"/></svg></span>
+      <span class="brand-name">Angel Thank-You Studio <span>&middot; Myra's Angels Foundation</span></span>
+    </div>
+    <div class="topbar-right"><span class="ai-dot"></span> Powered by AI</div>
+  </div>
+</div>
+
+<div class="shell">
+  <section class="hero">
+    <span class="eyebrow"><b></b> One bag full of love creates a child full of hope</span>
+    <h1>Every gift, thanked the way it deserves.</h1>
+    <p>Fill in a donor's details and let AI write a warm, personal thank-you for email or text. Every note is freshly written, never a template, and you can edit it before you send.</p>
+  </section>
+
+  <div class="bench">
+    <section aria-label="Donor details">
+      <p class="col-label">Donor details</p>
+
+      <div class="field">
+        <label class="lbl" for="donor">Donor's name</label>
+        <input type="text" id="donor" placeholder="e.g. Sarah Thompson" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="lbl">What did they give?</label>
+        <div class="seg" role="radiogroup" aria-label="Gift type">
+          <label><input type="radio" name="gift" value="items" checked> Items</label>
+          <label><input type="radio" name="gift" value="money"> Money</label>
+          <label><input type="radio" name="gift" value="both"> Both</label>
+        </div>
+      </div>
+
+      <div class="field toggle-items">
+        <label class="lbl" for="items">What did they donate? <span class="opt">in your own words</span></label>
+        <input type="text" id="items" placeholder="e.g. blankets, school supplies, pajamas" autocomplete="off">
+      </div>
+
+      <div class="field toggle-money">
+        <label class="lbl" for="amount">Gift amount <span class="opt">optional</span></label>
+        <input type="text" id="amount" placeholder="e.g. $150" autocomplete="off">
+      </div>
+
+      <div class="two">
+        <div class="field">
+          <label class="lbl" for="occasion">Occasion <span class="opt">optional</span></label>
+          <select id="occasion">
+            <option value="">General gift</option>
+            <option value="first-time donor">First-time donor</option>
+            <option value="returning supporter">Returning supporter</option>
+            <option value="holiday or seasonal drive">Holiday or seasonal</option>
+            <option value="in memory or honor of someone">In memory or honor</option>
+            <option value="birthday or celebration">Birthday or celebration</option>
+            <option value="donation drive or fundraiser">Donation drive</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="signer">Signed by <span class="opt">optional</span></label>
+          <input type="text" id="signer" placeholder="Myra &amp; the MAF Team" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl">Tone</label>
+        <div class="chips" id="tones">
+          <button type="button" class="chip" data-tone="warm" aria-pressed="true">Warm</button>
+          <button type="button" class="chip" data-tone="heartfelt" aria-pressed="false">Heartfelt</button>
+          <button type="button" class="chip" data-tone="short and sweet" aria-pressed="false">Short &amp; sweet</button>
+          <button type="button" class="chip" data-tone="formal" aria-pressed="false">Formal</button>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label class="lbl" for="personal">A personal line <span class="opt">optional</span></label>
+        <textarea id="personal" placeholder="e.g. It was so lovely meeting you at the fall drive."></textarea>
+      </div>
+    </section>
+
+    <section class="output" aria-label="The thank-you message">
+      <p class="col-label">The message</p>
+
+      <div class="channel" role="tablist" aria-label="Channel">
+        <button role="tab" aria-selected="true" data-channel="email" id="tab-email">Email</button>
+        <button role="tab" aria-selected="false" data-channel="text" id="tab-text">Text message</button>
+      </div>
+
+      <div class="note-shell">
+        <div class="note-top">
+          <span class="subject" id="subjectLine">Subject: A heartfelt thank-you from Myra's Angels</span>
+          <span class="meta" id="count"></span>
+        </div>
+
+        <div class="note-state" id="emptyState">
+          <p>Fill in the donor's details, then press <b>Write with AI</b> to create a fresh, personal thank-you.</p>
+        </div>
+        <div class="note-state hidden" id="loadingState">
+          <div class="spinner"></div>
+          <p>Writing a heartfelt note&hellip;</p>
+        </div>
+        <textarea class="note hidden" id="noteOut" aria-label="The generated thank-you note, editable" spellcheck="true"></textarea>
+      </div>
+
+      <div class="bar">
+        <button class="btn btn-primary" id="genBtn">Write with AI</button>
+        <button class="btn btn-soft" id="copyBtn" disabled>Copy message</button>
+        <button class="btn btn-soft" id="copySubjectBtn">Copy subject</button>
+        <button class="btn btn-soft" id="saveBtn" disabled>Save to history</button>
+        <button class="btn btn-soft" id="clearBtn">Clear</button>
+      </div>
+      <p class="sendhint" id="sendHint"><b>To send:</b> press Copy message, then paste it into your own email to the donor.</p>
+    </section>
+  </div>
+
+  <section class="history" aria-label="Saved thank-yous">
+    <div class="history-head">
+      <div>
+        <h2>Thanked donors</h2>
+        <span class="sub" id="histSub">Saved on this device</span>
+      </div>
+      <button class="link-btn hidden" id="clearAllBtn">Clear all history</button>
+    </div>
+    <div class="hist-list" id="histList"></div>
+  </section>
+
+  <footer>
+    <span>Built by <em>Elizabeth Frimpomaa</em> for Myra's Angels Foundation</span>
+    <span>Saved notes stay private on this device. Nothing is sent until you copy it.</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var state={tone:"warm",channel:"email",generated:false};
+  var STORE_KEY="maf_thankyou_history_v2";
+
+  /* tone chips */
+  var toneWrap=$("tones");
+  toneWrap.addEventListener("click",function(e){
+    var b=e.target.closest(".chip"); if(!b) return;
+    state.tone=b.getAttribute("data-tone");
+    Array.prototype.forEach.call(toneWrap.querySelectorAll(".chip"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});
+  });
+
+  /* gift type */
+  function currentGift(){var r=document.querySelector('input[name=gift]:checked');return r?r.value:"items";}
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=gift]'),function(r){
+    r.addEventListener("change",function(){document.body.setAttribute("data-gift",currentGift());});
+  });
+
+  /* channel tabs */
+  function setChannel(ch){
+    state.channel=ch;
+    document.body.setAttribute("data-channel",ch);
+    $("tab-email").setAttribute("aria-selected",ch==="email"?"true":"false");
+    $("tab-text").setAttribute("aria-selected",ch==="text"?"true":"false");
+    $("subjectLine").style.visibility = ch==="email" ? "visible":"hidden";
+    $("copySubjectBtn").style.display = ch==="email" ? "" : "none";
+    $("sendHint").innerHTML = ch==="email"
+      ? "<b>To send:</b> press Copy message, then paste it into your own email to the donor."
+      : "<b>To send:</b> press Copy message, then paste it into a text to the donor.";
+  }
+  $("tab-email").addEventListener("click",function(){setChannel("email");});
+  $("tab-text").addEventListener("click",function(){setChannel("text");});
+
+  /* helpers */
+  function clean(s){return (s||"").trim();}
+  function showState(which){
+    $("emptyState").classList.toggle("hidden", which!=="empty");
+    $("loadingState").classList.toggle("hidden", which!=="loading");
+    $("noteOut").classList.toggle("hidden", which!=="note");
+  }
+  function updateCount(){
+    if(state.channel==="text"){
+      var n=$("noteOut").value.length;
+      $("count").textContent = n + " chars" + (n>320?" · long for SMS":"");
+    } else {
+      var w=$("noteOut").value.split(/\s+/).filter(Boolean).length;
+      $("count").textContent = w + " words";
+    }
+  }
+  $("noteOut").addEventListener("input",updateCount);
+
+  /* toast */
+  var toast=$("toast"),tTimer=null;
+  function showToast(m){toast.textContent=m;toast.classList.add("show");if(tTimer)clearTimeout(tTimer);tTimer=setTimeout(function(){toast.classList.remove("show");},1900);}
+
+  /* ---- THE AI CALL ---- */
+  function gatherDetails(){
+    return {
+      donor:clean($("donor").value),
+      gift:currentGift(),
+      items:clean($("items").value),
+      amount:clean($("amount").value),
+      occasion:$("occasion").value,
+      signer:clean($("signer").value),
+      personal:clean($("personal").value),
+      tone:state.tone,
+      channel:state.channel
+    };
+  }
+
+  function generate(){
+    var details=gatherDetails();
+    if(!details.donor){ showToast("Add a donor name first"); $("donor").focus(); return; }
+    showState("loading");
+    $("genBtn").disabled=true;
+    $("copyBtn").disabled=true;
+    $("saveBtn").disabled=true;
+
+    fetch("/api/generate",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(details)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data.ok && data.note){
+        $("noteOut").value=data.note;
+        showState("note");
+        updateCount();
+        state.generated=true;
+        $("copyBtn").disabled=false;
+        $("saveBtn").disabled=false;
+        $("genBtn").textContent="Write again";
+      } else {
+        showState("empty");
+        showToast(data && data.error ? data.error : "Something went wrong. Try again.");
+      }
+    })
+    .catch(function(){
+      showState("empty");
+      showToast("Could not reach the AI. Is the server running?");
+    })
+    .finally(function(){ $("genBtn").disabled=false; });
+  }
+  $("genBtn").addEventListener("click",generate);
+
+  /* copy */
+  function copyText(text,okMsg){
+    function fallback(){
+      var n=$("noteOut");
+      n.focus(); n.select();
+      showToast("Selected. Press Ctrl/Cmd + C");
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){showToast(okMsg);},fallback);
+    } else fallback();
+  }
+  $("copyBtn").addEventListener("click",function(){
+    if(!$("noteOut").value) return;
+    copyText($("noteOut").value, state.channel==="text"?"Text copied":"Message copied");
+  });
+  $("copySubjectBtn").addEventListener("click",function(){
+    copyText("A heartfelt thank-you from Myra's Angels Foundation","Subject copied");
+  });
+
+  /* history */
+  function loadHistory(){try{var raw=localStorage.getItem(STORE_KEY);return raw?JSON.parse(raw):[];}catch(e){return [];}}
+  function saveHistory(list){try{localStorage.setItem(STORE_KEY,JSON.stringify(list));}catch(e){}}
+  function initials(name){var p=clean(name).split(/\s+/).filter(Boolean);if(!p.length)return "♥";return (p[0][0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase();}
+  function fmtDate(ts){try{return new Date(ts).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});}catch(e){return "";}}
+  function giftSummary(rec){
+    if(rec.gift==="money")return rec.amount?("Gift of "+rec.amount):"Financial gift";
+    if(rec.gift==="both")return "Items and money";
+    return rec.items?rec.items:"Item donation";
+  }
+  function renderHistory(){
+    var list=loadHistory(),wrap=$("histList"),sub=$("histSub"),clearAll=$("clearAllBtn");
+    wrap.innerHTML="";
+    if(!list.length){
+      var e=document.createElement("div");e.className="hist-empty";
+      e.textContent="No saved thank-yous yet. Write one above, then press Save to history.";
+      wrap.appendChild(e);sub.textContent="Saved on this device";clearAll.classList.add("hidden");return;
+    }
+    sub.textContent=list.length+(list.length===1?" donor thanked":" donors thanked")+" · saved on this device";
+    clearAll.classList.remove("hidden");
+    list.forEach(function(rec){
+      var row=document.createElement("div");row.className="hist-row";
+      var av=document.createElement("div");av.className="hist-av";av.textContent=initials(rec.name);row.appendChild(av);
+      var main=document.createElement("div");main.className="hist-main";
+      var nm=document.createElement("div");nm.className="hist-name";nm.textContent=rec.name||"Unnamed donor";
+      var sb=document.createElement("div");sb.className="hist-sub";sb.textContent=giftSummary(rec)+" · "+(rec.channel==="text"?"Text":"Email")+" · "+fmtDate(rec.ts);
+      main.appendChild(nm);main.appendChild(sb);row.appendChild(main);
+      var acts=document.createElement("div");acts.className="hist-actions";
+      var open=document.createElement("button");open.className="mini";open.textContent="Reopen";
+      open.addEventListener("click",function(){reopen(rec);});
+      var copy=document.createElement("button");copy.className="mini";copy.textContent="Copy";
+      copy.addEventListener("click",function(){copyText(rec.body,"Copied");});
+      var del=document.createElement("button");del.className="mini danger";del.textContent="Delete";
+      del.addEventListener("click",function(){deleteRec(rec.id);});
+      acts.appendChild(open);acts.appendChild(copy);acts.appendChild(del);row.appendChild(acts);
+      wrap.appendChild(row);
+    });
+  }
+  function currentRecord(){
+    var d=gatherDetails();
+    d.id=Date.now()+"-"+Math.random().toString(36).slice(2,7);
+    d.ts=Date.now();
+    d.body=$("noteOut").value;
+    return d;
+  }
+  $("saveBtn").addEventListener("click",function(){
+    if(!$("noteOut").value){ showToast("Write a note first"); return; }
+    var name=clean($("donor").value);
+    if(!name){ showToast("Add a donor name first"); $("donor").focus(); return; }
+    var list=loadHistory();list.unshift(currentRecord());
+    if(list.length>200)list=list.slice(0,200);
+    saveHistory(list);renderHistory();showToast("Saved to history");
+  });
+  function reopen(rec){
+    $("donor").value=rec.name||rec.donor||"";
+    $("items").value=rec.items||"";
+    $("amount").value=rec.amount||"";
+    $("occasion").value=rec.occasion||"";
+    $("signer").value=rec.signer||"";
+    $("personal").value=rec.personal||"";
+    var gr=document.querySelector('input[name=gift][value="'+(rec.gift||"items")+'"]');if(gr)gr.checked=true;
+    document.body.setAttribute("data-gift",rec.gift||"items");
+    state.tone=rec.tone||"warm";
+    Array.prototype.forEach.call(toneWrap.querySelectorAll(".chip"),function(x){x.setAttribute("aria-pressed",x.getAttribute("data-tone")===state.tone?"true":"false");});
+    setChannel(rec.channel||"email");
+    $("noteOut").value=rec.body||"";
+    showState("note");updateCount();
+    $("copyBtn").disabled=false;$("saveBtn").disabled=false;$("genBtn").textContent="Write again";
+    window.scrollTo({top:0,behavior:"smooth"});
+    showToast("Reopened "+(rec.name||rec.donor||"note"));
+  }
+  function deleteRec(id){var list=loadHistory().filter(function(r){return r.id!==id;});saveHistory(list);renderHistory();showToast("Deleted");}
+  $("clearAllBtn").addEventListener("click",function(){if(!loadHistory().length)return;saveHistory([]);renderHistory();showToast("History cleared");});
+
+  /* clear fields */
+  $("clearBtn").addEventListener("click",function(){
+    ["donor","items","amount","signer","personal"].forEach(function(id){$(id).value="";});
+    $("occasion").value="";
+    $("noteOut").value="";
+    showState("empty");
+    $("copyBtn").disabled=true;$("saveBtn").disabled=true;$("genBtn").textContent="Write with AI";
+    $("donor").focus();
+  });
+
+  /* init */
+  setChannel("email");
+  showState("empty");
+  renderHistory();
+})();
+</script>
+</body>
+</html>
